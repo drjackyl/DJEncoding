@@ -93,13 +93,13 @@ struct _CSVKeyedDecodingContainer<Key: CodingKey>: KeyedDecodingContainerProtoco
         // Without that behavior, this func would generally throw a `CSVDecoder.Error.notSupported`.
         
         if let customDecoder = decoder.getCustomDecoderForType(type) {
-            guard let csvValue = decoder.csvData.getValueOfColumn(key.stringValue) else {
-                throw CSVDecoder.Error.noValueForColumnInRow(column: key.stringValue, row: decoder.csvData.currentRow)
+            let csvValue = try ensureValueInColumn(key.stringValue)
+            let decodedValue = try decodeCSVValue(csvValue, ofColumn: key.stringValue, using: customDecoder)
+            
+            guard let typedDecodedValue = decodedValue as? T else {
+                throw CSVDecoder.Error.invalidValueForType(column: key.stringValue, row: decoder.csvData.currentRow, value: csvValue, type: type)
             }
-            guard let decodedValue = customDecoder(csvValue) as? T else {
-                throw CSVDecoder.Error.invalidValueForType(type: type, actual: csvValue, expected: "\(T.self)")
-            }
-            return decodedValue
+            return typedDecodedValue
         }
         
         guard decoder.primitivesDecoder.isPrimitiveType(type) || decoder.primitivesDecoder.isOptionalOfPrimitiveType(type) else {
@@ -137,5 +137,20 @@ struct _CSVKeyedDecodingContainer<Key: CodingKey>: KeyedDecodingContainerProtoco
     // MARK: - Private
     
     private let decoder: _CSVDecoder
+    
+    private func ensureValueInColumn(_ columnName: String) throws -> String {
+        guard let csvValue = decoder.csvData.getValueOfColumn(columnName) else {
+            throw CSVDecoder.Error.noValueForColumnInRow(column: columnName, row: decoder.csvData.currentRow)
+        }
+        return csvValue
+    }
+    
+    private func decodeCSVValue(_ csvValue: String, ofColumn columnName: String, using customDecoder: (String) throws -> Any) throws -> Any {
+        do {
+            return try customDecoder(csvValue)
+        } catch let error {
+            throw CSVDecoder.Error.customDecoderFailed(column: columnName, row: decoder.csvData.currentRow, underlyingError: error)
+        }
+    }
     
 }

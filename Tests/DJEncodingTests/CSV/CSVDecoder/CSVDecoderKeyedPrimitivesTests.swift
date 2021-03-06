@@ -152,13 +152,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, "invalid")
             XCTAssertTrue(type == Bool.self)
-            XCTAssertEqual(actual, "invalid")
-            XCTAssertEqual(expected, "true/false")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -222,13 +223,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
                 .decodeBoolean(trueValue: customTrue)
             _ = try decoder.decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, "Egon")
             XCTAssertTrue(type == Bool.self)
-            XCTAssertEqual(actual, "Egon")
-            XCTAssertEqual(expected, "Bärbel/false")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -288,13 +290,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == Double.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(type.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -313,13 +316,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == Double.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(Double.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -357,13 +361,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == Float.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(type.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -382,13 +387,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == Float.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(Float.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -426,13 +432,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == Int.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(type.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -451,13 +458,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == Int.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(Int.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -495,13 +503,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == Int8.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(type.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -520,13 +529,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == Int8.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(Int8.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -564,13 +574,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == Int16.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(type.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -589,13 +600,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == Int16.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(Int16.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -633,13 +645,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == Int32.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(type.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -658,13 +671,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == Int32.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(Int32.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -702,13 +716,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == Int64.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(type.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -727,13 +742,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == Int64.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(Int64.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -771,13 +787,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == UInt.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(type.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -796,13 +813,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == UInt.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(UInt.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -840,13 +858,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == UInt8.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(type.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -865,13 +884,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == UInt8.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(UInt8.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -909,13 +929,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == UInt16.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(type.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -934,13 +955,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == UInt16.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(UInt16.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -978,13 +1000,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == UInt32.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(type.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -1003,13 +1026,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == UInt32.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(UInt32.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -1047,13 +1071,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == UInt64.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(type.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return
@@ -1072,13 +1097,14 @@ class CSVDecoderKeyedPrimitivesTests: XCTestCase {
         do {
             _ = try CSVDecoder().decode(KeyedPrimitive.self, from: csvData)
         } catch let error as CSVDecoder.Error {
-            guard case let .invalidValueForType(type: type, actual: actual, expected: expected) = error else {
+            guard case let .invalidValueForType(column, row, csvValue, type) = error else {
                 XCTFail("Incorrect error was thrown: \(error)"); return
             }
             
+            XCTAssertEqual(column, "value")
+            XCTAssertEqual(row, 0)
+            XCTAssertEqual(csvValue, stringValue)
             XCTAssertTrue(type == UInt64.self)
-            XCTAssertEqual(actual, stringValue)
-            XCTAssertEqual(expected, "\(UInt64.self)")
             return
         } catch let error {
             XCTFail("Incorrect error was thrown: \(error)"); return

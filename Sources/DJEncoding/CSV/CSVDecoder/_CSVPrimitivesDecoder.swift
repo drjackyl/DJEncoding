@@ -50,7 +50,8 @@ class _CSVPrimitivesDecoder {
         switch csvValue {
         case options.booleanTrueValue: return true
         case options.booleanFalseValue: return false
-        default: throw CSVDecoder.Error.invalidValueForType(type: type, actual: csvValue, expected: "\(options.booleanTrueValue)/\(options.booleanFalseValue)")
+        default:
+            throw CSVDecoder.Error.invalidValueForType(column: column, row: csvData.currentRow, value: csvValue, type: type)
         }
     }
     
@@ -66,7 +67,7 @@ class _CSVPrimitivesDecoder {
             throw CSVDecoder.Error.noValueForColumnInRow(column: column, row: csvData.currentRow)
         }
         guard let decodedValue = Double(csvValue) else {
-            throw CSVDecoder.Error.invalidValueForType(type: type, actual: csvValue, expected: "\(Double.self)")
+            throw CSVDecoder.Error.invalidValueForType(column: column, row: csvData.currentRow, value: csvValue, type: type)
         }
         return decodedValue
     }
@@ -76,7 +77,7 @@ class _CSVPrimitivesDecoder {
             throw CSVDecoder.Error.noValueForColumnInRow(column: column, row: csvData.currentRow)
         }
         guard let decodedValue = Float(csvValue) else {
-            throw CSVDecoder.Error.invalidValueForType(type: type, actual: csvValue, expected: "\(Float.self)")
+            throw CSVDecoder.Error.invalidValueForType(column: column, row: csvData.currentRow, value: csvValue, type: type)
         }
         return decodedValue
     }
@@ -86,7 +87,7 @@ class _CSVPrimitivesDecoder {
             throw CSVDecoder.Error.noValueForColumnInRow(column: column, row: csvData.currentRow)
         }
         guard let decodedValue = Int(csvValue) else {
-            throw CSVDecoder.Error.invalidValueForType(type: type, actual: csvValue, expected: "\(Int.self)")
+            throw CSVDecoder.Error.invalidValueForType(column: column, row: csvData.currentRow, value: csvValue, type: type)
         }
         return decodedValue
     }
@@ -96,7 +97,7 @@ class _CSVPrimitivesDecoder {
             throw CSVDecoder.Error.noValueForColumnInRow(column: column, row: csvData.currentRow)
         }
         guard let decodedValue = Int8(csvValue) else {
-            throw CSVDecoder.Error.invalidValueForType(type: type, actual: csvValue, expected: "\(Int8.self)")
+            throw CSVDecoder.Error.invalidValueForType(column: column, row: csvData.currentRow, value: csvValue, type: type)
         }
         return decodedValue
     }
@@ -106,7 +107,7 @@ class _CSVPrimitivesDecoder {
             throw CSVDecoder.Error.noValueForColumnInRow(column: column, row: csvData.currentRow)
         }
         guard let decodedValue = Int16(csvValue) else {
-            throw CSVDecoder.Error.invalidValueForType(type: type, actual: csvValue, expected: "\(Int16.self)")
+            throw CSVDecoder.Error.invalidValueForType(column: column, row: csvData.currentRow, value: csvValue, type: type)
         }
         return decodedValue
     }
@@ -116,7 +117,7 @@ class _CSVPrimitivesDecoder {
             throw CSVDecoder.Error.noValueForColumnInRow(column: column, row: csvData.currentRow)
         }
         guard let decodedValue = Int32(csvValue) else {
-            throw CSVDecoder.Error.invalidValueForType(type: type, actual: csvValue, expected: "\(Int32.self)")
+            throw CSVDecoder.Error.invalidValueForType(column: column, row: csvData.currentRow, value: csvValue, type: type)
         }
         return decodedValue
     }
@@ -126,7 +127,7 @@ class _CSVPrimitivesDecoder {
             throw CSVDecoder.Error.noValueForColumnInRow(column: column, row: csvData.currentRow)
         }
         guard let decodedValue = Int64(csvValue) else {
-            throw CSVDecoder.Error.invalidValueForType(type: type, actual: csvValue, expected: "\(Int64.self)")
+            throw CSVDecoder.Error.invalidValueForType(column: column, row: csvData.currentRow, value: csvValue, type: type)
         }
         return decodedValue
     }
@@ -136,7 +137,7 @@ class _CSVPrimitivesDecoder {
             throw CSVDecoder.Error.noValueForColumnInRow(column: column, row: csvData.currentRow)
         }
         guard let decodedValue = UInt(csvValue) else {
-            throw CSVDecoder.Error.invalidValueForType(type: type, actual: csvValue, expected: "\(UInt.self)")
+            throw CSVDecoder.Error.invalidValueForType(column: column, row: csvData.currentRow, value: csvValue, type: type)
         }
         return decodedValue
     }
@@ -146,7 +147,7 @@ class _CSVPrimitivesDecoder {
             throw CSVDecoder.Error.noValueForColumnInRow(column: column, row: csvData.currentRow)
         }
         guard let decodedValue = UInt8(csvValue) else {
-            throw CSVDecoder.Error.invalidValueForType(type: type, actual: csvValue, expected: "\(UInt8.self)")
+            throw CSVDecoder.Error.invalidValueForType(column: column, row: csvData.currentRow, value: csvValue, type: type)
         }
         return decodedValue
     }
@@ -156,7 +157,7 @@ class _CSVPrimitivesDecoder {
             throw CSVDecoder.Error.noValueForColumnInRow(column: column, row: csvData.currentRow)
         }
         guard let decodedValue = UInt16(csvValue) else {
-            throw CSVDecoder.Error.invalidValueForType(type: type, actual: csvValue, expected: "\(UInt16.self)")
+            throw CSVDecoder.Error.invalidValueForType(column: column, row: csvData.currentRow, value: csvValue, type: type)
         }
         return decodedValue
     }
@@ -166,7 +167,7 @@ class _CSVPrimitivesDecoder {
             throw CSVDecoder.Error.noValueForColumnInRow(column: column, row: csvData.currentRow)
         }
         guard let decodedValue = UInt32(csvValue) else {
-            throw CSVDecoder.Error.invalidValueForType(type: type, actual: csvValue, expected: "\(UInt32.self)")
+            throw CSVDecoder.Error.invalidValueForType(column: column, row: csvData.currentRow, value: csvValue, type: type)
         }
         return decodedValue
     }
@@ -176,7 +177,7 @@ class _CSVPrimitivesDecoder {
             throw CSVDecoder.Error.noValueForColumnInRow(column: column, row: csvData.currentRow)
         }
         guard let decodedValue = UInt64(csvValue) else {
-            throw CSVDecoder.Error.invalidValueForType(type: type, actual: csvValue, expected: "\(UInt64.self)")
+            throw CSVDecoder.Error.invalidValueForType(column: column, row: csvData.currentRow, value: csvValue, type: type)
         }
         return decodedValue
     }
