@@ -97,7 +97,7 @@ struct _CSVKeyedDecodingContainer<Key: CodingKey>: KeyedDecodingContainerProtoco
             let decodedValue = try decodeCSVValue(csvValue, ofColumn: key.stringValue, using: customDecoder)
             
             guard let typedDecodedValue = decodedValue as? T else {
-                throw CSVDecoder.Error.invalidValueForType(type: type, actual: csvValue, expected: "\(T.self)")
+                throw CSVDecoder.Error.invalidValueForType(column: key.stringValue, row: decoder.csvData.currentRow, value: csvValue, type: type)
             }
             return typedDecodedValue
         }

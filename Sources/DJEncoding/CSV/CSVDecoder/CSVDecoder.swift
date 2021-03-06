@@ -25,7 +25,7 @@ public class CSVDecoder {
     
     public enum Error: Swift.Error {
         case deserializingFileFailed(underlyingError: Swift.Error, fileURL: URL)
-        case invalidValueForType(type: Any.Type, actual: String, expected: String)
+        case invalidValueForType(column: String, row: Int, value: String, type: Any.Type)
         case noValueForColumnInRow(column: String, row: Int)
         case customDecoderFailed(column: String, row: Int, underlyingError: Swift.Error)
         case columnDoesNotExist(column: String)
