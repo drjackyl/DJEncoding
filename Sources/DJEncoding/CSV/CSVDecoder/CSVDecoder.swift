@@ -27,6 +27,7 @@ public class CSVDecoder {
         case deserializingFileFailed(underlyingError: Swift.Error, fileURL: URL)
         case invalidValueForType(type: Any.Type, actual: String, expected: String)
         case noValueForColumnInRow(column: String, row: Int)
+        case customDecoderFailed(column: String, row: Int, underlyingError: Swift.Error)
         case columnDoesNotExist(column: String)
         case notSupported(hint: String)
         case notImplemented(hint: String)
@@ -45,7 +46,7 @@ public class CSVDecoder {
             var stringEncoding: String.Encoding = .utf8
             var booleanTrueValue: String = "\(true)"
             var booleanFalseValue: String = "\(false)"
-            var customDecoders: [String:((String) -> Any)] = .init()
+            var customDecoders: [String:((String) throws -> Any)] = .init()
         }
         
         public fileprivate(set) var options: Options = .init()
@@ -68,7 +69,7 @@ public class CSVDecoder {
         }
         
         @discardableResult
-        public func addCustomDecoder<T>(_ decode: @escaping (String) -> T) -> Configuration {
+        public func addCustomDecoder<T>(_ decode: @escaping (String) throws -> T) -> Configuration {
             options.customDecoders["\(T.self)"] = decode
             return self
         }

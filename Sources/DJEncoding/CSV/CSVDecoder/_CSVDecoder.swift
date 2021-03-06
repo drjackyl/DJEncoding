@@ -13,7 +13,7 @@ class _CSVDecoder: Decoder {
     let options: CSVDecoder.Configuration.Options
     let primitivesDecoder: _CSVPrimitivesDecoder
     
-    func getCustomDecoderForType<T>(_ type: T.Type) -> ((String) -> Any)? {
+    func getCustomDecoderForType<T>(_ type: T.Type) -> ((String) throws -> Any)? {
         options.customDecoders["\(T.self)"]
     }
     
