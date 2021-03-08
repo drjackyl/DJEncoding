@@ -8,15 +8,10 @@ public class CSVDecoder {
         self.configuration.options = options ?? CSVDecoder.Configuration.Options()
     }
     
-    //----->
-    // Add feature to decode from data
-    //
-//    public func decode<T: Decodable>(_ type: T.Type, from data: Data) throws -> T {
-//        // TODO: Deserialization
-//        let csvData = CSVData()
-//        return try decode(type, from: csvData)
-//    }
-    //<-----
+    public func decode<T: Decodable>(_ type: T.Type, from data: Data) throws -> T {
+        let csvData = try deserializeData(data)
+        return try decode(type, from: csvData)
+    }
     
     public func decode<T: Decodable>(_ type: T.Type, fromFile fileURL: URL) throws -> T {
         let csvData = try deserializeFileAtURL(fileURL)
@@ -25,6 +20,7 @@ public class CSVDecoder {
     
     public enum Error: Swift.Error {
         case deserializingFileFailed(underlyingError: Swift.Error, fileURL: URL)
+        case deserializingDataFailed(underlyingError: Swift.Error)
         case invalidValueForType(column: String, row: Int, value: String, type: Any.Type)
         case noValueForColumnInRow(column: String, row: Int)
         case customDecoderFailed(column: String, row: Int, underlyingError: Swift.Error)
@@ -95,16 +91,31 @@ public class CSVDecoder {
     
     // MARK: - Private
     
+    private func deserializeData(_ data: Data) throws -> CSVData {
+        let csvSerialization = createCSVSerialization()
+        
+        do {
+            return try csvSerialization.deserialize(data: data)
+        } catch let error {
+            throw Error.deserializingDataFailed(underlyingError: error)
+        }
+    }
+    
     private func deserializeFileAtURL(_ fileURL: URL) throws -> CSVData {
-        let csvSerialization = CSVSerialization()
-        csvSerialization.configuration
-            .encoding(configuration.options.stringEncoding)
+        let csvSerialization = createCSVSerialization()
         
         do {
             return try csvSerialization.deserialize(fileURL: fileURL)
         } catch let error {
             throw Error.deserializingFileFailed(underlyingError: error, fileURL: fileURL)
         }
+    }
+    
+    private func createCSVSerialization() -> CSVSerialization {
+        let csvSerialization = CSVSerialization()
+        csvSerialization.configuration
+            .encoding(configuration.options.stringEncoding)
+        return csvSerialization
     }
     
 }

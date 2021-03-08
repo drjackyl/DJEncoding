@@ -11,15 +11,13 @@ public class CSVSerialization {
     public func deserialize(fileURL: URL) throws -> CSVData {
         let lineDelimiter = try ensureLineDelimiter()
         let lineReader = try prepareLineReaderForFileAt(fileURL, lineDelimiter: lineDelimiter)
-        let header = try getHeaderByReadingNextLine(lineReader)
-        
-        let csvData = CSVData()
-        while let lineData = lineReader.readNextLine() {
-            try deserializeLine(lineData, usingHeader: header, into: csvData)
-            csvData.moveToNextRow()
-        }
-        csvData.moveToFirstRow()
-        return csvData
+        return try deserializeUsingLineReader(lineReader)
+    }
+    
+    public func deserialize(data: Data) throws -> CSVData {
+        let lineDelimiter = try ensureLineDelimiter()
+        let lineReader = DataLineReader(data: data, lineDelimiter: lineDelimiter)
+        return try deserializeUsingLineReader(lineReader)
     }
     
     public enum Error: Swift.Error {
@@ -76,14 +74,26 @@ public class CSVSerialization {
         return lineDelimiter
     }
     
-    private func prepareLineReaderForFileAt(_ fileURL: URL, lineDelimiter: Data) throws -> LineReader {
+    private func prepareLineReaderForFileAt(_ fileURL: URL, lineDelimiter: Data) throws -> FileLineReader {
         do {
-            let lineReader = LineReader(fileUrl: fileURL, lineDelimiter: lineDelimiter)
+            let lineReader = FileLineReader(fileURL: fileURL, lineDelimiter: lineDelimiter)
             try lineReader.openFile()
             return lineReader
         } catch let error {
             throw Error.failedToOpenFile(url: fileURL, underlyingError: error)
         }
+    }
+    
+    private func deserializeUsingLineReader(_ lineReader: LineReader) throws -> CSVData {
+        let header = try getHeaderByReadingNextLine(lineReader)
+        
+        let csvData = CSVData()
+        while let lineData = lineReader.readNextLine() {
+            try deserializeLine(lineData, usingHeader: header, into: csvData)
+            csvData.moveToNextRow()
+        }
+        csvData.moveToFirstRow()
+        return csvData
     }
     
     private func getHeaderByReadingNextLine(_ lineReader: LineReader) throws -> [String] {

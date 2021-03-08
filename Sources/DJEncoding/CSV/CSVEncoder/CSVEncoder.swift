@@ -1,10 +1,10 @@
 import Foundation
 
-class CSVEncoder {
+public class CSVEncoder {
     
     // MARK: - API
     
-    func encode<T: Encodable>(_ value: T) throws -> Data {
+    public func encode<T: Encodable>(_ value: T) throws -> Data {
         let csvData = CSVData()
         let csvEncoder = _CSVEncoder(csvData: csvData)
         try value.encode(to: csvEncoder)

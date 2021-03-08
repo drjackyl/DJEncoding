@@ -1,21 +1,21 @@
 import XCTest
 @testable import DJEncoding
 
-class LineReaderTests: XCTestCase {
+class FileLineReaderTests: XCTestCase {
     
     let lineDelimiter = "\n".data(using: .utf8)!
     
     func testOpenFileDoesNotThrow() throws {
-        let lineReader = LineReader(fileUrl: Tools.FileURL.pirateIpsumTxt, lineDelimiter: lineDelimiter)
+        let lineReader = FileLineReader(fileURL: Tools.FileURL.pirateIpsumTxt, lineDelimiter: lineDelimiter)
         try lineReader.openFile()
     }
     
-    func testOpFileDoesThrowWithInvalidURL() {
+    func testOpenFileDoesThrowWithInvalidURL() {
         let probablyInvalidFileURL = URL(fileURLWithPath: "/tmp/\(UUID().uuidString)")
-        let lineReader = LineReader(fileUrl: probablyInvalidFileURL, lineDelimiter: lineDelimiter)
+        let lineReader = FileLineReader(fileURL: probablyInvalidFileURL, lineDelimiter: lineDelimiter)
         do  {
             try lineReader.openFile()
-        } catch let error as LineReader.Error {
+        } catch let error as FileLineReader.Error {
             guard case .failedToOpenFile(_) = error else {
                 XCTFail("Wrong error was thrown: \(error)"); return
             }
@@ -25,7 +25,7 @@ class LineReaderTests: XCTestCase {
     }
     
     func testReadFileWithOneLineNoNewlineAtEoF() throws {
-        let lineReader = LineReader(fileUrl: Tools.FileURL.oneLineNoNewlineAtEoFTxt, lineDelimiter: lineDelimiter)
+        let lineReader = FileLineReader(fileURL: Tools.FileURL.oneLineNoNewlineAtEoFTxt, lineDelimiter: lineDelimiter)
         try lineReader.openFile()
         var lines: [Data] = .init()
         while let line = lineReader.readNextLine() {
@@ -38,7 +38,7 @@ class LineReaderTests: XCTestCase {
     }
     
     func testReadFileWithOneLineWithNewlineAtEoF() throws {
-        let lineReader = LineReader(fileUrl: Tools.FileURL.oneLineWithNewlineAtEoFTxt, lineDelimiter: lineDelimiter)
+        let lineReader = FileLineReader(fileURL: Tools.FileURL.oneLineWithNewlineAtEoFTxt, lineDelimiter: lineDelimiter)
         try lineReader.openFile()
         var lines: [Data] = .init()
         while let line = lineReader.readNextLine() {
@@ -51,7 +51,7 @@ class LineReaderTests: XCTestCase {
     }
     
     func testReadEmptyFile() throws {
-        let lineReader = LineReader(fileUrl: Tools.FileURL.emptyFileTxt, lineDelimiter: lineDelimiter)
+        let lineReader = FileLineReader(fileURL: Tools.FileURL.emptyFileTxt, lineDelimiter: lineDelimiter)
         try lineReader.openFile()
         var lines: [Data] = .init()
         while let line = lineReader.readNextLine() {
@@ -62,7 +62,7 @@ class LineReaderTests: XCTestCase {
     }
     
     func testReadEmptyFileWithThreeNewlines() throws {
-        let lineReader = LineReader(fileUrl: Tools.FileURL.threeNewlinesTxt, lineDelimiter: lineDelimiter)
+        let lineReader = FileLineReader(fileURL: Tools.FileURL.threeNewlinesTxt, lineDelimiter: lineDelimiter)
         try lineReader.openFile()
         var lines: [Data] = .init()
         while let line = lineReader.readNextLine() {
@@ -74,7 +74,7 @@ class LineReaderTests: XCTestCase {
     }
     
     func testReadPirateIpsum() throws {
-        let lineReader = LineReader(fileUrl: Tools.FileURL.pirateIpsumTxt, lineDelimiter: lineDelimiter)
+        let lineReader = FileLineReader(fileURL: Tools.FileURL.pirateIpsumTxt, lineDelimiter: lineDelimiter)
         try lineReader.openFile()
         var lines: [Data] = .init()
         while let line = lineReader.readNextLine() {
