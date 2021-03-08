@@ -81,4 +81,20 @@ class DataLineReaderTests: XCTestCase {
         XCTAssertEqual(resultUnderTest, expectedResult)
     }
     
+    func testReadDataWithStartIndexNotEqualZero() {
+        var data = Data([1, 2, 3])
+        data.append(lineDelimiter)
+        let subData = data[3..<data.endIndex]
+        
+        let lineReader = DataLineReader(data: subData, lineDelimiter: lineDelimiter)
+        
+        var lines: [Data] = .init()
+        while let line = lineReader.readNextLine() {
+            lines.append(line)
+        }
+        
+        XCTAssertEqual(lines.count, 1)
+        XCTAssertEqual(lines, [Data()])
+    }
+    
 }
