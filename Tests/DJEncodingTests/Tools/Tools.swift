@@ -74,3 +74,9 @@ class Tools {
     }
     
 }
+
+extension URL {
+    func load() -> Data {
+        try! Data(contentsOf: self)
+    }
+}
