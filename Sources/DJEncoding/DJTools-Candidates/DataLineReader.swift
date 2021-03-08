@@ -14,6 +14,7 @@ class DataLineReader: LineReader {
     init(data: Data, lineDelimiter: Data) {
         self.data = data
         self.lineDelimiter = lineDelimiter
+        self.lastIndex = data.startIndex
     }
     
     
@@ -49,7 +50,7 @@ class DataLineReader: LineReader {
     
     private let data: Data
     private let lineDelimiter: Data
-    private var lastIndex: Data.Index = 0
+    private var lastIndex: Data.Index
     
     private func getRangeOfLineDelimiter(startIndex: Data.Index) -> Range<Data.Index>? {
         data.range(of: lineDelimiter, options: [], in: startIndex..<data.endIndex)
